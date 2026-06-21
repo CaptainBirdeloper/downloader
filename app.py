@@ -11,13 +11,13 @@ app = Flask(__name__)
 logging.basicConfig(level=logging.INFO)
 logger = logging.getLogger(__name__)
 
-# Ensure downloads directory exists
-DOWNLOADS_DIR = os.path.abspath(os.path.join(os.path.dirname(__file__), 'downloads'))
-if not os.path.exists(DOWNLOADS_DIR):
-    os.makedirs(DOWNLOADS_DIR)
-
 # Detect Vercel / serverless cloud environments
 IS_VERCEL = "VERCEL" in os.environ
+
+# Ensure downloads directory exists (skip on read-only cloud filesystems)
+DOWNLOADS_DIR = os.path.abspath(os.path.join(os.path.dirname(__file__), 'downloads'))
+if not IS_VERCEL and not os.path.exists(DOWNLOADS_DIR):
+    os.makedirs(DOWNLOADS_DIR)
 
 @app.route('/')
 def index():
