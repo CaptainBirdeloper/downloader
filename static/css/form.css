@@ -1,0 +1,406 @@
+/* Form Fields, Inputs, Buttons, and States */
+
+/* Base form spacing */
+form {
+    display: flex;
+    flex-direction: column;
+    gap: 28px;
+}
+
+.form-group {
+    display: flex;
+    flex-direction: column;
+    position: relative;
+}
+
+.field-label {
+    font-size: var(--font-body-medium);
+    font-weight: var(--weight-medium);
+    color: var(--on-surface);
+    opacity: 0.8;
+    margin-bottom: 10px;
+    letter-spacing: 0.05em;
+    text-transform: uppercase;
+}
+
+/* Filled Text Field Container */
+.filled-text-field {
+    display: flex;
+    flex-direction: column-reverse;
+}
+
+.filled-text-field input {
+    background-color: var(--surface-variant);
+    border: none;
+    border-bottom: 2px solid var(--outline);
+    border-radius: 12px 12px 0 0;
+    padding: 26px 16px 10px 16px;
+    font-family: inherit;
+    font-size: 16px;
+    color: var(--on-surface);
+    outline: none;
+    width: 100%;
+    transition: border-color var(--duration-standard) var(--ease-standard), 
+                background-color var(--duration-standard) var(--ease-standard);
+}
+
+.filled-text-field label {
+    position: absolute;
+    left: 16px;
+    top: 20px;
+    font-size: 16px;
+    color: var(--on-surface);
+    opacity: 0.65;
+    pointer-events: none;
+    transition: transform var(--duration-standard) var(--ease-standard), 
+                font-size var(--duration-standard) var(--ease-standard), 
+                color var(--duration-standard) var(--ease-standard), 
+                opacity var(--duration-standard) var(--ease-standard);
+    transform-origin: top left;
+}
+
+/* Floating Label Animation States */
+.filled-text-field input:focus ~ label,
+.filled-text-field input:not(:placeholder-shown) ~ label {
+    transform: translateY(-12px) scale(0.75);
+    color: var(--primary);
+    opacity: 1;
+}
+
+.filled-text-field input:focus {
+    border-bottom-color: var(--primary);
+    background-color: rgba(103, 80, 164, 0.05);
+}
+
+/* Input group styling for Download Path with Browse Button */
+.input-group {
+    display: flex;
+    align-items: stretch;
+    width: 100%;
+    position: relative;
+}
+
+.input-group input {
+    flex: 1;
+    border-radius: 12px 0 0 0;
+}
+
+.input-group label {
+    top: 20px;
+}
+
+.input-group #browse-button {
+    border: none;
+    border-bottom: 2px solid var(--outline);
+    background-color: var(--surface-variant);
+    color: var(--primary);
+    padding: 0 20px;
+    font-family: inherit;
+    font-size: var(--font-label-large);
+    font-weight: var(--weight-medium);
+    border-radius: 0 12px 0 0;
+    cursor: pointer;
+    transition: background-color var(--duration-standard) var(--ease-standard), 
+                border-color var(--duration-standard) var(--ease-standard),
+                color var(--duration-standard) var(--ease-standard);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    white-space: nowrap;
+}
+
+.input-group #browse-button:hover:not(:disabled) {
+    background-color: rgba(103, 80, 164, 0.08);
+}
+
+.input-group #browse-button:active:not(:disabled) {
+    background-color: rgba(103, 80, 164, 0.12);
+}
+
+/* Sync borders of input group on focus */
+.input-group input:focus ~ #browse-button {
+    border-bottom-color: var(--primary);
+}
+
+/* Segmented Button Group Styling */
+.segmented-button-group {
+    display: flex;
+    border: 1px solid var(--outline);
+    border-radius: 50px;
+    overflow: hidden;
+    background-color: transparent;
+    width: 100%;
+}
+
+.segmented-button {
+    flex: 1;
+    border: none;
+    background-color: transparent;
+    color: var(--on-surface);
+    padding: 14px 16px;
+    font-family: inherit;
+    font-size: var(--font-label-large);
+    font-weight: var(--weight-medium);
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    transition: background-color var(--duration-standard) var(--ease-standard), 
+                color var(--duration-standard) var(--ease-standard);
+    position: relative;
+}
+
+.segmented-button:not(:first-child) {
+    border-left: 1px solid var(--outline);
+}
+
+/* Hover State Layer for Segmented Button */
+.segmented-button::before {
+    content: '';
+    position: absolute;
+    top: 0; left: 0; right: 0; bottom: 0;
+    background-color: var(--primary);
+    opacity: 0;
+    transition: opacity var(--duration-standard) var(--ease-standard);
+    pointer-events: none;
+}
+
+.segmented-button:hover::before {
+    opacity: var(--state-hover-opacity);
+}
+
+/* Active Segmented Button States */
+.segmented-button.active {
+    background-color: var(--primary-container);
+    color: var(--on-primary-container);
+}
+
+.segmented-button.active::before {
+    background-color: var(--on-primary-container);
+}
+
+.segmented-button .checkmark {
+    font-size: 14px;
+    line-height: 1;
+}
+
+.segmented-button .checkmark.hidden {
+    display: none;
+}
+
+/* M3 Filled Download Button */
+#download-button {
+    background-color: var(--primary);
+    color: var(--on-primary);
+    border: none;
+    border-radius: 50px;
+    padding: 16px 24px;
+    font-family: inherit;
+    font-size: var(--font-label-large);
+    font-weight: var(--weight-medium);
+    letter-spacing: 0.05em;
+    cursor: pointer;
+    position: relative;
+    overflow: hidden;
+    width: 100%;
+    box-shadow: var(--elevation-l1);
+    transition: background-color var(--duration-standard) var(--ease-standard), 
+                transform var(--duration-active) var(--ease-standard), 
+                box-shadow var(--duration-standard) var(--ease-standard);
+}
+
+#download-button::before {
+    content: '';
+    position: absolute;
+    top: 0; left: 0; right: 0; bottom: 0;
+    background-color: var(--on-primary);
+    opacity: 0;
+    transition: opacity var(--duration-standard) var(--ease-standard);
+    pointer-events: none;
+}
+
+#download-button:hover:not(:disabled) {
+    box-shadow: var(--elevation-l2);
+}
+
+#download-button:hover:not(:disabled)::before {
+    opacity: var(--state-hover-opacity);
+}
+
+#download-button:focus:not(:disabled) {
+    outline: none;
+    box-shadow: var(--elevation-l3);
+}
+
+#download-button:focus:not(:disabled)::before {
+    opacity: var(--state-focus-opacity);
+}
+
+#download-button:active:not(:disabled) {
+    transform: scale(0.98);
+    box-shadow: var(--elevation-l1);
+}
+
+#download-button:active:not(:disabled)::before {
+    opacity: var(--state-pressed-opacity);
+}
+
+/* Disabled input controls styling */
+#url-input:disabled,
+#path-input:disabled,
+#browse-button:disabled,
+.segmented-button:disabled {
+    opacity: 0.38;
+    cursor: not-allowed;
+}
+
+/* Loading Ellipsis State (CSS Only) */
+#download-button:disabled {
+    background-color: var(--outline);
+    color: transparent;
+    box-shadow: none;
+    transform: none;
+    cursor: not-allowed;
+}
+
+#download-button:disabled .button-text {
+    visibility: hidden;
+}
+
+#download-button:disabled::after {
+    content: '';
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    width: 6px;
+    height: 6px;
+    transform: translate(-50%, -50%);
+    box-shadow: -12px 0 0 var(--on-primary), 0 0 0 var(--on-primary), 12px 0 0 var(--on-primary);
+    animation: m3-loading-dots 1s infinite alternate;
+    border-radius: 50%;
+}
+
+@keyframes m3-loading-dots {
+    0% {
+        box-shadow: -12px 0 0 rgba(255,255,255,0.2), 0 0 0 rgba(255,255,255,1), 12px 0 0 rgba(255,255,255,0.2);
+    }
+    50% {
+        box-shadow: -12px 0 0 rgba(255,255,255,1), 0 0 0 rgba(255,255,255,0.2), 12px 0 0 rgba(255,255,255,0.2);
+    }
+    100% {
+        box-shadow: -12px 0 0 rgba(255,255,255,0.2), 0 0 0 rgba(255,255,255,0.2), 12px 0 0 rgba(255,255,255,1);
+    }
+}
+
+/* Hidden elements helper class */
+.hidden {
+    display: none !important;
+}
+
+/* Download Queue Cards Layout (M3 style) */
+.queue-card {
+    display: flex;
+    gap: 16px;
+    padding: 12px;
+    background-color: rgba(147, 143, 153, 0.08);
+    border-radius: 16px;
+    align-items: center;
+    border: 1px solid rgba(147, 143, 153, 0.1);
+    transition: background-color var(--duration-standard) var(--ease-standard);
+}
+
+.queue-card.active {
+    background-color: rgba(103, 80, 164, 0.12);
+    border-color: rgba(103, 80, 164, 0.3);
+}
+
+.queue-card.complete {
+    background-color: rgba(0, 255, 102, 0.05);
+    border-color: rgba(0, 255, 102, 0.2);
+}
+
+.queue-card.error {
+    background-color: rgba(179, 38, 30, 0.05);
+    border-color: rgba(179, 38, 30, 0.2);
+}
+
+.queue-thumb {
+    width: 72px;
+    height: 54px;
+    object-fit: cover;
+    border-radius: 8px;
+    flex-shrink: 0;
+    background-color: var(--surface-variant);
+}
+
+.queue-info {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+    min-width: 0;
+}
+
+.queue-title {
+    font-size: 13px;
+    font-weight: var(--weight-bold);
+    color: var(--on-surface);
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    line-height: 1.2;
+}
+
+.queue-artist {
+    font-size: 11px;
+    font-weight: var(--weight-regular);
+    color: var(--on-surface);
+    opacity: 0.6;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.progress-bar-container {
+    height: 4px;
+    background-color: var(--surface-variant);
+    border-radius: 2px;
+    overflow: hidden;
+    margin-top: 4px;
+    display: none; /* hidden until active/started */
+}
+
+.queue-card.active .progress-bar-container,
+.queue-card.complete .progress-bar-container {
+    display: block;
+}
+
+.progress-bar {
+    height: 100%;
+    width: 0%;
+    background-color: var(--primary);
+    border-radius: 2px;
+    transition: width 200ms var(--ease-standard);
+}
+
+.queue-card.complete .progress-bar {
+    background-color: #00ff66;
+}
+
+.progress-label {
+    font-size: 10px;
+    font-family: 'Roboto Flex', sans-serif;
+    color: var(--primary);
+    margin-top: 2px;
+    font-weight: var(--weight-medium);
+}
+
+.queue-card.complete .progress-label {
+    color: #00ff66;
+}
+
+.queue-card.error .progress-label {
+    color: var(--error);
+}
+

@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>YT Downloader - Mobile PWA Media Downloader</title>
+    <meta name="description" content="High-performance local URL downloader optimized for mobile screens. Installable PWA with dark mode.">
+    <meta name="theme-color" content="#6750A4">
+    <link rel="manifest" href="/static/manifest.json">
+    
+    <!-- Import Roboto Flex variable font -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Roboto+Flex:opsz,wdth,wght@8..144,25..151,100..1000&display=swap" rel="stylesheet">
+    
+    <!-- Load CSS in strict order -->
+    <link rel="stylesheet" href="/static/css/reset.css">
+    <link rel="stylesheet" href="/static/css/layout.css">
+    <link rel="stylesheet" href="/static/css/form.css">
+    <link rel="stylesheet" href="/static/css/status.css">
+    
+    <!-- Load JS modules deferred -->
+    <script src="/static/js/api.js" defer></script>
+    <script src="/static/js/status-display.js" defer></script>
+    <script src="/static/js/form-handler.js" defer></script>
+    <script src="/static/js/segmented-button.js" defer></script>
+    <script src="/static/js/main.js" defer></script>
+</head>
+<body>
+    <main class="app-container">
+        <header class="app-header">
+            <h1>YT Downloader</h1>
+            <p class="subtitle">PWA local backend instance</p>
+        </header>
+
+        <section class="downloader-panel">
+            <form id="download-form" novalidate>
+                <!-- URL input group with floating label -->
+                <div class="form-group filled-text-field">
+                    <input type="url" id="url-input" name="url" placeholder=" " required autocomplete="off" aria-label="Source Video or Playlist URL">
+                    <label for="url-input">Source URL / Playlist</label>
+                </div>
+
+                <!-- Path input group with floating label and browse button -->
+                <div class="form-group filled-text-field">
+                    <div class="input-group">
+                        <input type="text" id="path-input" name="path" placeholder=" " autocomplete="off" aria-label="Custom download path">
+                        <label for="path-input">Download Path (Optional)</label>
+                        <button type="button" id="browse-button" aria-label="Browse folder natively">BROWSE...</button>
+                    </div>
+                </div>
+
+                <!-- Segmented Button Group instead of native dropdown -->
+                <div class="form-group">
+                    <span class="field-label">Output Format</span>
+                    <div class="segmented-button-group" role="group" aria-label="Media format selector">
+                        <button type="button" class="segmented-button active" data-value="mp4" aria-selected="true">
+                            <span class="checkmark">&#x2713;</span>
+                            <span class="label">MP4</span>
+                        </button>
+                        <button type="button" class="segmented-button" data-value="mp3" aria-selected="false">
+                            <span class="checkmark hidden">&#x2713;</span>
+                            <span class="label">MP3</span>
+                        </button>
+                        <button type="button" class="segmented-button" data-value="webm" aria-selected="false">
+                            <span class="checkmark hidden">&#x2713;</span>
+                            <span class="label">WEBM</span>
+                        </button>
+                        <button type="button" class="segmented-button" data-value="m4a" aria-selected="false">
+                            <span class="checkmark hidden">&#x2713;</span>
+                            <span class="label">M4A</span>
+                        </button>
+                    </div>
+                    
+                    <!-- Hidden native select for form-handler.js mapping -->
+                    <select id="format-select" name="format" class="hidden">
+                        <option value="mp4" selected>MP4</option>
+                        <option value="mp3">MP3</option>
+                        <option value="webm">WEBM</option>
+                        <option value="m4a">M4A</option>
+                    </select>
+                </div>
+
+                <button type="submit" id="download-button" aria-label="Fetch metadata and start downloading">
+                    <span class="button-text">START DOWNLOAD</span>
+                </button>
+            </form>
+        </section>
+
+        <!-- Snackbar-style status banner -->
+        <section id="status-panel" class="status-panel hidden">
+            <div id="status-spinner" class="status-spinner hidden"></div>
+            <div class="status-content">
+                <h2 id="status-title">Ready</h2>
+                <p id="status-message"></p>
+            </div>
+        </section>
+
+        <!-- PWA Queue Panel for item progress bars -->
+        <section id="queue-panel" class="queue-panel hidden">
+            <h2 class="queue-header">Download Queue</h2>
+            <div id="queue-list" class="queue-list"></div>
+        </section>
+    </main>
+</body>
+</html>

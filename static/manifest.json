@@ -1,0 +1,17 @@
+{
+  "name": "Local Media Downloader",
+  "short_name": "Downloader",
+  "description": "Progressive Web App to download local audio and video with yt-dlp.",
+  "start_url": "/",
+  "display": "standalone",
+  "background_color": "#060608",
+  "theme_color": "#6750A4",
+  "orientation": "portrait-primary",
+  "icons": [
+    {
+      "src": "/static/images/icon.svg",
+      "sizes": "any",
+      "type": "image/svg+xml"
+    }
+  ]
+}
