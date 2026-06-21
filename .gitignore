@@ -1,0 +1,13 @@
+# Ignore media downloads folder
+downloads/*
+!downloads/.gitkeep
+
+# Ignore Python runtime files
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+
+# Ignore local system files
+.DS_Store
+Thumbs.db
