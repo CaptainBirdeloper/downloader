@@ -16,13 +16,15 @@ DOWNLOADS_DIR = os.path.abspath(os.path.join(os.path.dirname(__file__), 'downloa
 if not os.path.exists(DOWNLOADS_DIR):
     os.makedirs(DOWNLOADS_DIR)
 
+# Detect Vercel / serverless cloud environments
+IS_VERCEL = "VERCEL" in os.environ
+
 @app.route('/')
 def index():
     return render_template('index.html')
 
 @app.route('/sw.js')
 def service_worker():
-    # Service worker needs to be served from root to be in scope
     response = send_from_directory(os.path.join(app.static_folder, 'js'), 'sw.js')
     response.headers['Cache-Control'] = 'no-cache, no-store, must-revalidate'
     response.headers['Content-Type'] = 'application/javascript'
@@ -33,11 +35,19 @@ def service_worker():
 def status():
     return jsonify({
         "status": "ok",
-        "downloads_dir": DOWNLOADS_DIR
+        "downloads_dir": DOWNLOADS_DIR,
+        "is_vercel": IS_VERCEL
     })
 
 @app.route('/browse', methods=['POST'])
 def browse():
+    if IS_VERCEL:
+        return jsonify({
+            "success": False, 
+            "path": "", 
+            "message": "Local folder browsing is disabled in cloud deployments. Please run this app locally."
+        }), 400
+
     try:
         import tkinter as tk
         from tkinter import filedialog
@@ -60,6 +70,12 @@ def browse():
 
 @app.route('/info', methods=['POST'])
 def info():
+    if IS_VERCEL:
+        return jsonify({
+            "success": False,
+            "message": "Subprocess executions (like yt-dlp metadata querying) are disabled in serverless cloud deployments. Please run this application locally."
+        }), 400
+
     data = request.get_json() or {}
     url = data.get('url')
     
@@ -138,6 +154,9 @@ def info():
 
 @app.route('/download-stream', methods=['GET'])
 def download_stream():
+    if IS_VERCEL:
+        return Response("data: " + json.dumps({"status": "error", "message": "Downloading is not supported on Vercel serverless functions. Please run this application locally using run.bat."}) + "\n\n", mimetype='text/event-stream')
+
     url = request.args.get('url')
     fmt = request.args.get('format')
     custom_path = request.args.get('path')
