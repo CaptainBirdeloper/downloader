@@ -70,17 +70,14 @@ yt-downloader/
 
 ---
 
-## Mobile Usage & Cloud Deployments
+## Local Mobile Usage (Wi-Fi)
 
-Vercel is a **serverless** platform, which does not support running CLI processes (like `yt-dlp`), writing persistent files, or running tasks beyond a 10-second timeout. To deploy this app to the cloud and download files directly from your mobile device:
+To download files directly onto your mobile phone or tablet using your local PC as the server:
 
-### Recommended Cloud Hosts
-1. **Render** (Web Services): Supports persistent disk storage, long-running subprocesses, and custom binary packages.
-2. **Railway**: Offers native Docker/Python containers with persistent volumes.
-
-### Cloud Configuration (Render/Railway)
-1. Add a custom build command to install `ffmpeg` and `yt-dlp` in the host environment (or use a Dockerfile).
-2. Start the app using `gunicorn app:app`.
-3. Use the default downloads directory (do not use the local folder picker).
-4. Once a download is complete, a **"SAVE TO DEVICE"** button will appear on the queue card to download the file directly from the server to your mobile phone storage.
+1. Ensure your PC and mobile device are connected to the same local Wi-Fi network.
+2. Find your PC's local IP address (e.g., run `ipconfig` in Command Prompt on Windows).
+3. Start the application on your PC by double-clicking `run.bat`.
+4. Open the browser on your mobile device and navigate to `http://<PC-IP>:5000` (replace `<PC-IP>` with your PC's IP address, e.g., `http://192.168.1.100:5000`).
+5. Enter a URL, choose the format, and click **START DOWNLOAD**.
+6. When the download completes, a **"SAVE TO DEVICE"** button will appear on the queue card. Click it to transfer the completed media file directly from your PC to your mobile device's storage.
 
