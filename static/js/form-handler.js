@@ -130,7 +130,9 @@ window.formHandler = {
                     (filename) => {
                         // onComplete
                         if (card) card.className = 'queue-card complete';
-                        if (progressLabel) progressLabel.textContent = 'Finished';
+                        if (progressLabel) {
+                            progressLabel.innerHTML = `Finished. <a href="/downloads/${encodeURIComponent(filename)}" class="device-download-btn" download="${filename}">Save to Device</a>`;
+                        }
                         successCount++;
                         resolve(true);
                     },

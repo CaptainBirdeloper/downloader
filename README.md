@@ -67,3 +67,20 @@ yt-downloader/
 2. **Select Output Format**: Use the segmented buttons to select **MP4**, **MP3** (audio extraction), **WEBM**, or **M4A**.
 3. **Paste URL**: Copy and paste any media link or playlist link into the URL input field.
 4. **Download**: Click **START DOWNLOAD**. If it is a playlist, the queue panel will show listing all tracks with their thumbnails, uploading authors, and individual progress bars.
+
+---
+
+## Mobile Usage & Cloud Deployments
+
+Vercel is a **serverless** platform, which does not support running CLI processes (like `yt-dlp`), writing persistent files, or running tasks beyond a 10-second timeout. To deploy this app to the cloud and download files directly from your mobile device:
+
+### Recommended Cloud Hosts
+1. **Render** (Web Services): Supports persistent disk storage, long-running subprocesses, and custom binary packages.
+2. **Railway**: Offers native Docker/Python containers with persistent volumes.
+
+### Cloud Configuration (Render/Railway)
+1. Add a custom build command to install `ffmpeg` and `yt-dlp` in the host environment (or use a Dockerfile).
+2. Start the app using `gunicorn app:app`.
+3. Use the default downloads directory (do not use the local folder picker).
+4. Once a download is complete, a **"SAVE TO DEVICE"** button will appear on the queue card to download the file directly from the server to your mobile phone storage.
+

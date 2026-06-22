@@ -277,5 +277,14 @@ def download():
     except Exception as e:
         return jsonify({"success": False, "message": str(e)}), 500
 
+@app.route('/downloads/<path:filename>')
+def serve_download(filename):
+    from flask import send_from_directory
+    try:
+        # send_from_directory prevents directory traversal attacks
+        return send_from_directory(DOWNLOADS_DIR, filename, as_attachment=True)
+    except FileNotFoundError:
+        return "File not found.", 404
+
 if __name__ == '__main__':
     app.run(host='127.0.0.1', port=5000, debug=True)
