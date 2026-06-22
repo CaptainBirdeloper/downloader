@@ -1,13 +1,15 @@
-/* Material 3 Snackbar-style Status Panel */
+/* Status display elements styled in the mockup dark brutalist theme */
 .status-panel {
     display: flex;
     align-items: center;
     gap: 16px;
     padding: 14px 24px;
-    border-radius: 50px;
-    background-color: var(--on-surface);
-    color: var(--surface);
-    box-shadow: var(--elevation-l3);
+    border-radius: 6px;
+    background-color: var(--surface);
+    color: var(--on-surface);
+    border: 1px solid var(--outline);
+    border-left: 5px solid var(--primary);
+    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.4);
     margin-top: 16px;
     width: 100%;
 }
@@ -16,15 +18,14 @@
     display: none !important;
 }
 
-/* Slide Up + Fade Entrance Animation */
 .status-panel:not(.hidden) {
-    animation: m3-snackbar-entrance var(--duration-standard) var(--ease-standard) forwards;
+    animation: m3-snackbar-entrance var(--duration-std) var(--ease-std) forwards;
 }
 
 @keyframes m3-snackbar-entrance {
     from {
         opacity: 0;
-        transform: translateY(12px);
+        transform: translateY(8px);
     }
     to {
         opacity: 1;
@@ -32,12 +33,11 @@
     }
 }
 
-/* Spinner styling */
 .status-spinner {
     width: 20px;
     height: 20px;
-    border: 2.5px solid rgba(254, 247, 255, 0.25);
-    border-top-color: var(--surface);
+    border: 2.5px solid rgba(255, 255, 255, 0.15);
+    border-top-color: var(--primary-light);
     border-radius: 50%;
     flex-shrink: 0;
     animation: m3-spinner-spin 0.8s infinite linear;
@@ -59,45 +59,35 @@
 }
 
 #status-title {
-    font-size: var(--font-body-medium);
-    font-weight: var(--weight-bold);
+    font-size: 13px;
+    font-weight: 700;
     text-transform: uppercase;
     white-space: nowrap;
     letter-spacing: 0.05em;
+    color: var(--primary-light);
 }
 
 #status-message {
-    font-size: var(--font-body-medium);
-    font-weight: var(--weight-regular);
-    opacity: 0.9;
+    font-size: 13px;
+    color: var(--on-surface-muted);
     text-overflow: ellipsis;
     overflow: hidden;
     white-space: nowrap;
     min-width: 0;
 }
 
-/* Loading state styles */
-.status-panel.loading {
-    background-color: var(--on-surface);
-    color: var(--surface);
-}
-
-/* Success tint modifier */
+/* Success status overlay */
 .status-panel.success {
-    background-color: var(--primary-container);
-    color: var(--on-primary-container);
-    box-shadow: var(--elevation-l1);
+    border-left-color: var(--success);
 }
 
 .status-panel.success #status-title {
-    color: var(--on-primary-container);
+    color: var(--success);
 }
 
-/* Error tint modifier */
+/* Error status overlay */
 .status-panel.error {
-    background-color: #F9DEDC;
-    color: var(--error);
-    box-shadow: var(--elevation-l1);
+    border-left-color: var(--error);
 }
 
 .status-panel.error #status-title {

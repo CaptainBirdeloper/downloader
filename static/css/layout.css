@@ -1,62 +1,69 @@
-/* Page Structure and Card Layouts */
+/* Layout wrappers, headers, and card containers */
 body {
     display: flex;
     justify-content: center;
     align-items: center;
     min-height: 100vh;
-    padding: 16px;
+    padding: 24px;
     background-color: var(--background);
 }
 
 .app-container {
     width: 100%;
-    max-width: 560px;
+    max-width: 520px;
     display: flex;
     flex-direction: column;
-    gap: 24px;
+    gap: 32px;
 }
 
 .app-header {
     text-align: center;
     display: flex;
     flex-direction: column;
-    gap: 4px;
+    gap: 6px;
 }
 
 .app-header h1 {
-    font-size: var(--font-display-large);
-    font-weight: 400;
-    color: var(--primary);
-    letter-spacing: -0.02em;
-    line-height: 1.15;
+    font-family: var(--font-display);
+    font-size: 64px;
+    font-weight: 700;
+    color: var(--on-surface);
+    letter-spacing: 0.05em;
+    text-transform: uppercase;
+    line-height: 1;
 }
 
 .app-header .subtitle {
-    font-size: var(--font-body-medium);
-    font-weight: 400;
-    color: var(--on-surface);
-    opacity: 0.7;
+    font-size: 11px;
+    font-weight: 500;
+    color: var(--on-surface-muted);
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
 }
 
-/* Form Card Container */
+/* Card Panel Container */
 .downloader-panel {
     background-color: var(--surface);
-    border-radius: 28px;
-    box-shadow: var(--elevation-l2);
-    padding: 24px;
-    animation: m3-card-entrance var(--duration-emph) var(--ease-standard) forwards;
+    border-radius: 6px;
+    border: 1px solid var(--outline);
+    border-left: 5px solid var(--primary); /* thick violet left accent line */
+    padding: 28px;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
+    animation: m3-card-entrance var(--duration-std) var(--ease-std) forwards;
 }
 
-/* Dynamic Queue Panel */
+/* Queue Panel Container */
 .queue-panel {
     background-color: var(--surface);
-    border-radius: 28px;
-    box-shadow: var(--elevation-l2);
+    border-radius: 6px;
+    border: 1px solid var(--outline);
+    border-left: 5px solid var(--primary);
     padding: 24px;
     display: flex;
     flex-direction: column;
     gap: 16px;
-    animation: m3-card-entrance var(--duration-emph) var(--ease-standard) forwards;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
+    animation: m3-card-entrance var(--duration-std) var(--ease-std) forwards;
 }
 
 .queue-panel.hidden {
@@ -64,10 +71,11 @@ body {
 }
 
 .queue-header {
-    font-size: var(--font-title-large);
-    font-weight: var(--weight-medium);
-    color: var(--primary);
-    border-bottom: 1px solid rgba(147, 143, 153, 0.2);
+    font-size: 13px;
+    font-weight: 700;
+    color: var(--on-surface);
+    opacity: 0.9;
+    border-bottom: 1px solid var(--outline);
     padding-bottom: 8px;
     letter-spacing: 0.05em;
     text-transform: uppercase;
@@ -77,28 +85,27 @@ body {
     display: flex;
     flex-direction: column;
     gap: 12px;
-    max-height: 340px;
+    max-height: 300px;
     overflow-y: auto;
     padding-right: 4px;
 }
 
-/* Custom Webkit Scrollbar */
+/* Custom Scrollbar for list container */
 .queue-list::-webkit-scrollbar {
-    width: 6px;
+    width: 4px;
 }
 .queue-list::-webkit-scrollbar-track {
     background: transparent;
 }
 .queue-list::-webkit-scrollbar-thumb {
     background-color: var(--outline);
-    border-radius: 3px;
-    opacity: 0.5;
+    border-radius: 2px;
 }
 
 @keyframes m3-card-entrance {
     from {
         opacity: 0;
-        transform: translateY(16px);
+        transform: translateY(10px);
     }
     to {
         opacity: 1;
@@ -106,10 +113,13 @@ body {
     }
 }
 
-/* Touch targets optimization for mobile screens */
+/* Responsive Touch Target Adjustments */
 @media (max-width: 600px) {
     body {
-        padding: 12px;
+        padding: 16px;
+    }
+    .app-header h1 {
+        font-size: 48px;
     }
     .downloader-panel,
     .queue-panel {

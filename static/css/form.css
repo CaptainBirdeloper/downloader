@@ -1,10 +1,9 @@
-/* Form Fields, Inputs, Buttons, and States */
+/* Form Controls, Inputs, Segmented buttons, and the Download button */
 
-/* Base form spacing */
 form {
     display: flex;
     flex-direction: column;
-    gap: 28px;
+    gap: 24px;
 }
 
 .form-group {
@@ -14,16 +13,15 @@ form {
 }
 
 .field-label {
-    font-size: var(--font-body-medium);
-    font-weight: var(--weight-medium);
-    color: var(--on-surface);
-    opacity: 0.8;
-    margin-bottom: 10px;
-    letter-spacing: 0.05em;
+    font-size: 11px;
+    font-weight: 700;
+    color: var(--on-surface-muted);
+    margin-bottom: 12px;
+    letter-spacing: 0.1em;
     text-transform: uppercase;
 }
 
-/* Filled Text Field Container */
+/* Filled Text Field styling */
 .filled-text-field {
     display: flex;
     flex-direction: column-reverse;
@@ -33,46 +31,41 @@ form {
     background-color: var(--surface-variant);
     border: none;
     border-bottom: 2px solid var(--outline);
-    border-radius: 12px 12px 0 0;
-    padding: 26px 16px 10px 16px;
+    border-radius: 4px;
+    padding: 24px 16px 8px 16px;
     font-family: inherit;
-    font-size: 16px;
+    font-size: 14px;
     color: var(--on-surface);
     outline: none;
     width: 100%;
-    transition: border-color var(--duration-standard) var(--ease-standard), 
-                background-color var(--duration-standard) var(--ease-standard);
+    transition: border-color var(--duration-std) var(--ease-std);
 }
 
 .filled-text-field label {
     position: absolute;
     left: 16px;
-    top: 20px;
-    font-size: 16px;
-    color: var(--on-surface);
-    opacity: 0.65;
+    top: 18px;
+    font-size: 14px;
+    color: var(--on-surface-muted);
     pointer-events: none;
-    transition: transform var(--duration-standard) var(--ease-standard), 
-                font-size var(--duration-standard) var(--ease-standard), 
-                color var(--duration-standard) var(--ease-standard), 
-                opacity var(--duration-standard) var(--ease-standard);
+    transition: transform var(--duration-std) var(--ease-std), 
+                font-size var(--duration-std) var(--ease-std), 
+                color var(--duration-std) var(--ease-std);
     transform-origin: top left;
 }
 
-/* Floating Label Animation States */
+/* Input floating transitions matching layout */
 .filled-text-field input:focus ~ label,
 .filled-text-field input:not(:placeholder-shown) ~ label {
-    transform: translateY(-12px) scale(0.75);
-    color: var(--primary);
-    opacity: 1;
+    transform: translateY(-10px) scale(0.75);
+    color: var(--primary-light);
 }
 
 .filled-text-field input:focus {
     border-bottom-color: var(--primary);
-    background-color: rgba(103, 80, 164, 0.05);
 }
 
-/* Input group styling for Download Path with Browse Button */
+/* Path selection input group */
 .input-group {
     display: flex;
     align-items: stretch;
@@ -82,27 +75,27 @@ form {
 
 .input-group input {
     flex: 1;
-    border-radius: 12px 0 0 0;
+    border-radius: 4px 0 0 4px;
 }
 
 .input-group label {
-    top: 20px;
+    top: 18px;
 }
 
 .input-group #browse-button {
     border: none;
     border-bottom: 2px solid var(--outline);
     background-color: var(--surface-variant);
-    color: var(--primary);
+    color: var(--primary-light);
     padding: 0 20px;
-    font-family: inherit;
-    font-size: var(--font-label-large);
-    font-weight: var(--weight-medium);
-    border-radius: 0 12px 0 0;
+    font-family: var(--font-base);
+    font-size: 12px;
+    font-weight: 700;
+    letter-spacing: 0.05em;
+    border-radius: 0 4px 4px 0;
     cursor: pointer;
-    transition: background-color var(--duration-standard) var(--ease-standard), 
-                border-color var(--duration-standard) var(--ease-standard),
-                color var(--duration-standard) var(--ease-standard);
+    transition: color var(--duration-std) var(--ease-std), 
+                border-color var(--duration-std) var(--ease-std);
     display: flex;
     align-items: center;
     justify-content: center;
@@ -110,143 +103,100 @@ form {
 }
 
 .input-group #browse-button:hover:not(:disabled) {
-    background-color: rgba(103, 80, 164, 0.08);
+    color: var(--on-surface);
 }
 
-.input-group #browse-button:active:not(:disabled) {
-    background-color: rgba(103, 80, 164, 0.12);
-}
-
-/* Sync borders of input group on focus */
+/* Sync border on focus */
 .input-group input:focus ~ #browse-button {
     border-bottom-color: var(--primary);
 }
 
-/* Segmented Button Group Styling */
+/* Segmented Format buttons grid layout */
 .segmented-button-group {
-    display: flex;
-    border: 1px solid var(--outline);
-    border-radius: 50px;
-    overflow: hidden;
-    background-color: transparent;
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 12px;
     width: 100%;
 }
 
+@media (max-width: 600px) {
+    .segmented-button-group {
+        grid-template-columns: repeat(2, 1fr);
+        gap: 10px;
+    }
+}
+
 .segmented-button {
-    flex: 1;
-    border: none;
+    border: 1.5px solid var(--outline);
+    border-radius: 4px;
     background-color: transparent;
     color: var(--on-surface);
-    padding: 14px 16px;
-    font-family: inherit;
-    font-size: var(--font-label-large);
-    font-weight: var(--weight-medium);
+    padding: 12px 16px;
+    font-family: var(--font-display);
+    font-size: 16px;
+    font-weight: 700;
     cursor: pointer;
     display: flex;
     align-items: center;
     justify-content: center;
     gap: 8px;
-    transition: background-color var(--duration-standard) var(--ease-standard), 
-                color var(--duration-standard) var(--ease-standard);
-    position: relative;
+    letter-spacing: 0.05em;
+    transition: background-color var(--duration-std) var(--ease-std), 
+                border-color var(--duration-std) var(--ease-std),
+                color var(--duration-std) var(--ease-std);
 }
 
-.segmented-button:not(:first-child) {
-    border-left: 1px solid var(--outline);
+.segmented-button:hover:not(:disabled) {
+    border-color: var(--primary-light);
+    background-color: rgba(110, 86, 207, 0.08);
 }
 
-/* Hover State Layer for Segmented Button */
-.segmented-button::before {
-    content: '';
-    position: absolute;
-    top: 0; left: 0; right: 0; bottom: 0;
-    background-color: var(--primary);
-    opacity: 0;
-    transition: opacity var(--duration-standard) var(--ease-standard);
-    pointer-events: none;
-}
-
-.segmented-button:hover::before {
-    opacity: var(--state-hover-opacity);
-}
-
-/* Active Segmented Button States */
 .segmented-button.active {
-    background-color: var(--primary-container);
-    color: var(--on-primary-container);
-}
-
-.segmented-button.active::before {
-    background-color: var(--on-primary-container);
+    background-color: var(--primary);
+    border-color: var(--primary);
+    color: var(--on-surface);
 }
 
 .segmented-button .checkmark {
     font-size: 14px;
-    line-height: 1;
 }
 
 .segmented-button .checkmark.hidden {
     display: none;
 }
 
-/* M3 Filled Download Button */
+/* Brutalist pop-out download button */
 #download-button {
-    background-color: var(--primary);
-    color: var(--on-primary);
+    background-color: var(--primary-light);
+    color: var(--background);
     border: none;
-    border-radius: 50px;
+    border-radius: 6px;
     padding: 16px 24px;
-    font-family: inherit;
-    font-size: var(--font-label-large);
-    font-weight: var(--weight-medium);
+    font-family: var(--font-display);
+    font-size: 18px;
+    font-weight: 700;
     letter-spacing: 0.05em;
+    text-transform: uppercase;
     cursor: pointer;
     position: relative;
     overflow: hidden;
     width: 100%;
-    box-shadow: var(--elevation-l1);
-    transition: background-color var(--duration-standard) var(--ease-standard), 
-                transform var(--duration-active) var(--ease-standard), 
-                box-shadow var(--duration-standard) var(--ease-standard);
-}
-
-#download-button::before {
-    content: '';
-    position: absolute;
-    top: 0; left: 0; right: 0; bottom: 0;
-    background-color: var(--on-primary);
-    opacity: 0;
-    transition: opacity var(--duration-standard) var(--ease-standard);
-    pointer-events: none;
+    box-shadow: 0 4px 0 var(--primary-dark);
+    transition: background-color var(--duration-std) var(--ease-std), 
+                transform var(--duration-active) var(--ease-std), 
+                box-shadow var(--duration-active) var(--ease-std);
 }
 
 #download-button:hover:not(:disabled) {
-    box-shadow: var(--elevation-l2);
-}
-
-#download-button:hover:not(:disabled)::before {
-    opacity: var(--state-hover-opacity);
-}
-
-#download-button:focus:not(:disabled) {
-    outline: none;
-    box-shadow: var(--elevation-l3);
-}
-
-#download-button:focus:not(:disabled)::before {
-    opacity: var(--state-focus-opacity);
+    background-color: #bfaaff;
 }
 
 #download-button:active:not(:disabled) {
-    transform: scale(0.98);
-    box-shadow: var(--elevation-l1);
+    transform: translateY(2px);
+    box-shadow: 0 2px 0 var(--primary-dark);
 }
 
-#download-button:active:not(:disabled)::before {
-    opacity: var(--state-pressed-opacity);
-}
-
-/* Disabled input controls styling */
+/* Disabled states */
 #url-input:disabled,
 #path-input:disabled,
 #browse-button:disabled,
@@ -255,10 +205,9 @@ form {
     cursor: not-allowed;
 }
 
-/* Loading Ellipsis State (CSS Only) */
 #download-button:disabled {
     background-color: var(--outline);
-    color: transparent;
+    color: var(--on-surface-muted);
     box-shadow: none;
     transform: none;
     cursor: not-allowed;
@@ -276,7 +225,7 @@ form {
     width: 6px;
     height: 6px;
     transform: translate(-50%, -50%);
-    box-shadow: -12px 0 0 var(--on-primary), 0 0 0 var(--on-primary), 12px 0 0 var(--on-primary);
+    box-shadow: -12px 0 0 var(--on-surface), 0 0 0 var(--on-surface), 12px 0 0 var(--on-surface);
     animation: m3-loading-dots 1s infinite alternate;
     border-radius: 50%;
 }
@@ -293,43 +242,43 @@ form {
     }
 }
 
-/* Hidden elements helper class */
+/* Hidden helper */
 .hidden {
     display: none !important;
 }
 
-/* Download Queue Cards Layout (M3 style) */
+/* Download queue styling */
 .queue-card {
     display: flex;
     gap: 16px;
     padding: 12px;
-    background-color: rgba(147, 143, 153, 0.08);
-    border-radius: 16px;
+    background-color: rgba(60, 57, 67, 0.2);
+    border-radius: 6px;
     align-items: center;
-    border: 1px solid rgba(147, 143, 153, 0.1);
-    transition: background-color var(--duration-standard) var(--ease-standard);
+    border: 1px solid var(--outline);
+    transition: background-color var(--duration-std) var(--ease-std);
 }
 
 .queue-card.active {
-    background-color: rgba(103, 80, 164, 0.12);
-    border-color: rgba(103, 80, 164, 0.3);
+    background-color: rgba(110, 86, 207, 0.15);
+    border-color: var(--primary);
 }
 
 .queue-card.complete {
-    background-color: rgba(0, 255, 102, 0.05);
-    border-color: rgba(0, 255, 102, 0.2);
+    background-color: rgba(48, 164, 108, 0.05);
+    border-color: var(--success);
 }
 
 .queue-card.error {
-    background-color: rgba(179, 38, 30, 0.05);
-    border-color: rgba(179, 38, 30, 0.2);
+    background-color: rgba(229, 72, 77, 0.05);
+    border-color: var(--error);
 }
 
 .queue-thumb {
     width: 72px;
     height: 54px;
     object-fit: cover;
-    border-radius: 8px;
+    border-radius: 4px;
     flex-shrink: 0;
     background-color: var(--surface-variant);
 }
@@ -344,7 +293,7 @@ form {
 
 .queue-title {
     font-size: 13px;
-    font-weight: var(--weight-bold);
+    font-weight: 700;
     color: var(--on-surface);
     white-space: nowrap;
     overflow: hidden;
@@ -354,9 +303,7 @@ form {
 
 .queue-artist {
     font-size: 11px;
-    font-weight: var(--weight-regular);
-    color: var(--on-surface);
-    opacity: 0.6;
+    color: var(--on-surface-muted);
     white-space: nowrap;
     overflow: hidden;
     text-overflow: ellipsis;
@@ -368,7 +315,7 @@ form {
     border-radius: 2px;
     overflow: hidden;
     margin-top: 4px;
-    display: none; /* hidden until active/started */
+    display: none;
 }
 
 .queue-card.active .progress-bar-container,
@@ -379,25 +326,24 @@ form {
 .progress-bar {
     height: 100%;
     width: 0%;
-    background-color: var(--primary);
+    background-color: var(--primary-light);
     border-radius: 2px;
-    transition: width 200ms var(--ease-standard);
+    transition: width 200ms var(--ease-std);
 }
 
 .queue-card.complete .progress-bar {
-    background-color: #00ff66;
+    background-color: var(--success);
 }
 
 .progress-label {
     font-size: 10px;
-    font-family: 'Roboto Flex', sans-serif;
-    color: var(--primary);
+    color: var(--primary-light);
     margin-top: 2px;
-    font-weight: var(--weight-medium);
+    font-weight: 500;
 }
 
 .queue-card.complete .progress-label {
-    color: #00ff66;
+    color: var(--success);
 }
 
 .queue-card.error .progress-label {
@@ -408,21 +354,21 @@ form {
     display: inline-flex;
     align-items: center;
     justify-content: center;
-    background-color: var(--primary);
-    color: var(--on-primary) !important;
-    padding: 8px 16px;
-    border-radius: 50px;
-    font-size: 11px;
-    font-weight: var(--weight-medium);
+    background-color: var(--primary-light);
+    color: var(--background) !important;
+    padding: 6px 12px;
+    border-radius: 4px;
+    font-size: 10px;
+    font-family: var(--font-display);
+    font-weight: 700;
     text-decoration: none;
-    margin-top: 8px;
+    margin-top: 6px;
     text-transform: uppercase;
     letter-spacing: 0.05em;
     align-self: flex-start;
-    box-shadow: var(--elevation-l1);
-    transition: background-color var(--duration-standard) var(--ease-standard), 
-                box-shadow var(--duration-standard) var(--ease-standard),
-                transform var(--duration-active) var(--ease-standard);
+    box-shadow: 0 2px 0 var(--primary-dark);
+    transition: background-color var(--duration-std) var(--ease-std), 
+                transform var(--duration-active) var(--ease-std);
     cursor: pointer;
     border: none;
     outline: none;
@@ -430,12 +376,10 @@ form {
 }
 
 .device-download-btn:hover {
-    background-color: var(--primary-container);
-    color: var(--on-primary-container) !important;
-    box-shadow: var(--elevation-l2);
+    background-color: #bfaaff;
 }
 
 .device-download-btn:active {
-    transform: scale(0.95);
+    transform: translateY(1px);
+    box-shadow: 0 1px 0 var(--primary-dark);
 }
-
