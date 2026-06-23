@@ -155,21 +155,28 @@ window.formHandler = {
     },
 
     /**
-     * Trigger native directory explorer
+     * Trigger directory validation from input prompt
      */
     async handleBrowseClick() {
+        const pathInput = document.getElementById('path-input');
+        if (!pathInput) return;
+
+        const currentPath = pathInput.value.trim();
+        const targetPath = prompt("Enter absolute folder path for downloads:", currentPath || "");
+        
+        if (targetPath === null) {
+            return;
+        }
+
         window.formHandler.setInputsDisabled(true);
         try {
-            const result = await window.downloaderAPI.browseDirectory();
+            const result = await window.downloaderAPI.browseDirectory(targetPath.trim());
             if (result.success && result.path) {
-                const pathInput = document.getElementById('path-input');
-                if (pathInput) {
-                    pathInput.value = result.path;
-                    // Trigger input event to float label
-                    pathInput.dispatchEvent(new Event('input', { bubbles: true }));
-                }
-            } else if (!result.success && result.message && result.message !== 'Selection cancelled.') {
-                window.statusDisplay.showError(result.message);
+                pathInput.value = result.path;
+                // Trigger input event to float label
+                pathInput.dispatchEvent(new Event('input', { bubbles: true }));
+            } else {
+                window.statusDisplay.showError(result.message || 'Validation failed.');
             }
         } catch (err) {
             window.statusDisplay.showError(`Browsing error: ${err.message}`);

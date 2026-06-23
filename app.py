@@ -11,10 +11,19 @@ app = Flask(__name__)
 logging.basicConfig(level=logging.INFO)
 logger = logging.getLogger(__name__)
 
+# Determine downloads directory dynamically
+DOWNLOADS_DIR = os.getenv('YT_DL_DIR')
+if DOWNLOADS_DIR:
+    DOWNLOADS_DIR = os.path.abspath(DOWNLOADS_DIR)
+else:
+    DOWNLOADS_DIR = os.path.abspath(os.path.join(os.path.dirname(__file__), 'downloads'))
+
 # Ensure downloads directory exists
-DOWNLOADS_DIR = os.path.abspath(os.path.join(os.path.dirname(__file__), 'downloads'))
 if not os.path.exists(DOWNLOADS_DIR):
-    os.makedirs(DOWNLOADS_DIR)
+    try:
+        os.makedirs(DOWNLOADS_DIR)
+    except Exception as e:
+        logger.error(f"Failed to create downloads folder at {DOWNLOADS_DIR}: {str(e)}")
 
 @app.route('/')
 def index():
@@ -38,24 +47,27 @@ def status():
 @app.route('/browse', methods=['POST'])
 def browse():
     try:
-        import tkinter as tk
-        from tkinter import filedialog
+        data = request.get_json() or {}
+        target_path = data.get('path')
         
-        root = tk.Tk()
-        root.withdraw()
-        root.attributes('-topmost', True)
+        if not target_path:
+            return jsonify({"success": False, "message": "Path is required"}), 400
+            
+        # Normalize and expand path
+        normalized = os.path.abspath(os.path.expanduser(target_path.strip()))
         
-        selected_dir = filedialog.askdirectory(title="Select Download Folder")
-        root.destroy()
-        
-        if selected_dir:
-            norm_dir = os.path.abspath(selected_dir)
-            return jsonify({"success": True, "path": norm_dir})
-        else:
-            return jsonify({"success": False, "path": "", "message": "Selection cancelled."})
+        if not os.path.exists(normalized):
+            return jsonify({"success": False, "message": "Selected path does not exist."}), 400
+        if not os.path.isdir(normalized):
+            return jsonify({"success": False, "message": "Selected path is not a directory."}), 400
+            
+        return jsonify({
+            "success": True,
+            "path": normalized
+        })
     except Exception as e:
-        logger.error(f"Error during directory selection: {str(e)}")
-        return jsonify({"success": False, "path": "", "message": f"Failed to browse directory: {str(e)}"}), 500
+        logger.error(f"Error during path validation: {str(e)}")
+        return jsonify({"success": False, "message": f"Failed to validate path: {str(e)}"}), 500
 
 @app.route('/info', methods=['POST'])
 def info():

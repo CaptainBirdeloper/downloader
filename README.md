@@ -50,34 +50,68 @@ yt-downloader/
 
 ---
 
-## Installation & Setup (Windows)
+## Installation & Setup
 
-1. Make sure you have **Python 3** installed and added to your system `PATH`.
-2. Ensure `yt-dlp` is installed and globally available in your system path, or can be run by python.
-3. Simply double-click the `run.bat` launcher file.
-   - The script will automatically verify your Python installation.
-   - It will install all backend dependencies from `requirements.txt`.
-   - It will start the local Flask server at `http://localhost:5000` and launch your default browser.
+### Running on Windows
+1. Ensure **Python 3** is installed and added to your system `PATH`.
+2. Double-click the `run.bat` launcher file.
+   - The script will activate a local Python virtual environment if present (`venv\Scripts\activate.bat`).
+   - If not in a virtual environment, it will install dependencies from `requirements.txt`.
+   - It will configure the default download folder to `%~dp0downloads` via the `YT_DL_DIR` environment variable.
+   - It will start the local Flask server at `http://127.0.0.1:5000` and automatically open it in your browser.
+
+### Running on Android (Termux)
+1. Install **Termux** on your Android device.
+2. Copy the project folder into your Termux `$HOME` directory.
+3. Make the launch script executable:
+   ```bash
+   chmod +x run.sh
+   ```
+4. Run the launcher script:
+   ```bash
+   ./run.sh
+   ```
+   - The script will quietly install the required Python dependencies (`flask`, `yt-dlp`).
+   - It will set the default download folder to `$HOME/yt_downloads` via the `YT_DL_DIR` environment variable.
+   - It will start the Flask server. Open `http://127.0.0.1:5000` in your device's mobile browser.
+   *Note: Ensure `ffmpeg` is installed on your device (e.g. `pkg install ffmpeg`) to allow file merging.*
 
 ---
 
-## Usage
+## API Endpoints
 
-1. **Set Custom Download Path (Optional)**: Click **BROWSE...** to open a native folder window and select where downloads are saved. Defaults to a local `./downloads/` folder.
-2. **Select Output Format**: Use the segmented buttons to select **MP4**, **MP3** (audio extraction), **WEBM**, or **M4A**.
-3. **Paste URL**: Copy and paste any media link or playlist link into the URL input field.
-4. **Download**: Click **START DOWNLOAD**. If it is a playlist, the queue panel will show listing all tracks with their thumbnails, uploading authors, and individual progress bars.
+### POST `/browse`
+Validates absolute folder paths for download directories.
+
+- **Request Body Format**:
+  ```json
+  {
+    "path": "/absolute/path/to/downloads"
+  }
+  ```
+
+- **Success Response (200 OK)**:
+  ```json
+  {
+    "success": true,
+    "path": "/absolute/path/to/downloads"
+  }
+  ```
+
+- **Error Response (400 Bad Request)**:
+  ```json
+  {
+    "success": false,
+    "message": "Selected path does not exist."
+  }
+  ```
 
 ---
 
 ## Local Mobile Usage (Wi-Fi)
-
-To download files directly onto your mobile phone or tablet using your local PC as the server:
-
+To download files directly onto your mobile device using your local PC as the server:
 1. Ensure your PC and mobile device are connected to the same local Wi-Fi network.
-2. Find your PC's local IP address (e.g., run `ipconfig` in Command Prompt on Windows).
-3. Start the application on your PC by double-clicking `run.bat`.
-4. Open the browser on your mobile device and navigate to `http://<PC-IP>:5000` (replace `<PC-IP>` with your PC's IP address, e.g., `http://192.168.1.100:5000`).
-5. Enter a URL, choose the format, and click **START DOWNLOAD**.
-6. When the download completes, a **"SAVE TO DEVICE"** button will appear on the queue card. Click it to transfer the completed media file directly from your PC to your mobile device's storage.
+2. Start the application on your PC by double-clicking `run.bat`.
+3. Open the browser on your mobile device and navigate to `http://<PC-IP>:5000` (e.g. `http://192.168.1.100:5000`).
+4. Once a download finishes, click **"SAVE TO DEVICE"** to copy the media file to your mobile storage.
 

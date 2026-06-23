@@ -91,16 +91,18 @@ window.downloaderAPI = {
     },
 
     /**
-     * Trigger backend native folder picker dialog
+     * Validate download directory path via backend API
+     * @param {string} path - Target path to validate
      * @returns {Promise<Object>} Response containing {success, path, message}
      */
-    async browseDirectory() {
+    async browseDirectory(path) {
         try {
             const response = await fetch('/browse', {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json'
-                }
+                },
+                body: JSON.stringify({ path })
             });
             return await response.json();
         } catch (error) {
